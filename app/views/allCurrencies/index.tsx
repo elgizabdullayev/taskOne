@@ -1,15 +1,16 @@
-import { useIsFocused, useNavigation } from '@react-navigation/core';
-import React, { useEffect, useMemo } from 'react';
+import React, { FC, useEffect } from 'react';
 import { View, Text, ScrollView, Pressable } from "react-native";
 import { useDispatch, useSelector } from 'react-redux';
 import { getCurrencies } from '../../models/currencies/actions';
 import { WebSocketClient } from '../../webSocket/webSocket';
 
-const Feed = ({}) => {
+interface Props {
+    navigation: any
+}
+
+export const AllCurrencies: FC<Props> = ({navigation}) => {
     const dispatch = useDispatch();
     const ws = new WebSocketClient();
-    const navigation = useNavigation();
-    const isFocused = useIsFocused();
     useEffect(() => {
         dispatch(getCurrencies());
         ws.getInfo();
@@ -17,10 +18,9 @@ const Feed = ({}) => {
 
     const currenciesData = useSelector((state: any) => state.currencies);
     const ratesData = useSelector((state: any) => state.rates);
-    // console.log('============', currenciesData?.data)
     console.log('aaa');
 
-    const renderItems = useMemo(()=> currenciesData?.data?.map((item: any, index: number) => { return (
+    const renderItems = currenciesData?.data?.map((item: any, index: number) => { return (
         <View key={index}>
             <Pressable onPress={() => navigation.replace("DetailCurrency", item)}>
                 <Text style={{fontSize: 16}}>
@@ -28,8 +28,8 @@ const Feed = ({}) => {
                 </Text>
             </Pressable>
         </View>)
-    }), [currenciesData, ratesData])
-
+    })
+    
     return (
         <View style={{flex: 1}}>
             <ScrollView>
@@ -38,5 +38,3 @@ const Feed = ({}) => {
         </View>
     )
 }
-
-export {Feed};

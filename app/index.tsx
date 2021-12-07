@@ -1,6 +1,6 @@
 import React from "react";
 import { NavigationContainer } from '@react-navigation/native';
-import { Feed } from "./views/feed";
+import { AllCurrencies } from "./views/allCurrencies";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { DetailCurrency } from "./views/detailCurrency";
 
@@ -10,8 +10,8 @@ export default function App() {
     return (
       <NavigationContainer>
         <Stack.Navigator>
-            <Stack.Screen name="Feed" component={Feed} />
-            <Stack.Screen name="DetailCurrency" component={DetailCurrency} detachPreviousScreen={true}/>
+            <Stack.Screen name="AllCurrencies" component={AllCurrencies} />
+            <Stack.Screen name="DetailCurrency" component={DetailCurrency}/>
         </Stack.Navigator>
       </NavigationContainer>
     );
