@@ -7,4 +7,4 @@ export {
 }
 
 export const getCurrencies = () => ({type: GET_ASSETS_INFO_REQUEST});
-export const setCurrencies = (data: Array<object>) => ({type: GET_ASSETS_INFO_SUCCESS, payload: data })
+export const setCurrencies = (data: Array<object>) => ({type: GET_ASSETS_INFO_SUCCESS, payload: data });

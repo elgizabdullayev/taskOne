@@ -1,13 +1,13 @@
-import { UPDATE_ALL_RATES } from "./actions";
+import { SET_CURRENCY_RATE } from "./actions";
 
 const initialState = {
-    data: {}
+    data: ''
 }
 
 const reducer = (state = initialState, action: {payload: object, type: string}) => {
     switch (action.type){
-        case UPDATE_ALL_RATES: {
-           return { data: { ...state.data, ...action.payload }};
+        case SET_CURRENCY_RATE: {
+           return { data: action.payload };
         }
         default: return state;
     }
