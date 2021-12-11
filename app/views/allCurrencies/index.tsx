@@ -17,7 +17,6 @@ export const AllCurrencies: FC<Props> = ({navigation}) => {
     }, [])
 
     const currenciesData = useSelector((state: any) => state.currencies);
-    const ratesData = useSelector((state: any) => state.rates);
     console.log('aaa');
 
     const renderItems = currenciesData?.data?.map((item: any, index: number) => { return (

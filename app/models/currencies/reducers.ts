@@ -1,4 +1,4 @@
-import { GET_ASSETS_INFO_SUCCESS } from "./actions";
+import { GET_ASSETS_INFO_SUCCESS, SET_UPDATED_CURRENCY } from "./actions";
 
 const initialState = {
     data: []
@@ -10,6 +10,11 @@ const reducer = (state = initialState, action: {payload: object, type: string}) 
             // console.log('aaaaaaaaaaaaaa', action.payload)
            return { data: action.payload };
         }
+        case SET_UPDATED_CURRENCY: {
+            // console.log('aaaaaaaaaaaaaa', action.payload)
+           return { data: action.payload };
+        }
+
         default: return state;
     }
 };
