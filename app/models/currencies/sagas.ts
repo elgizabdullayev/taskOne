@@ -1,24 +1,30 @@
-import { useSelector } from 'react-redux';
 import { call, put, takeEvery } from 'redux-saga/effects';
-import { getAllCurrencies } from '../../api';
-import { GET_ASSETS_INFO_REQUEST, GET_ASSETS_INFO_SUCCESS, UPDATE_CURRENCY_RATE } from './actions';
+import { store } from '../../../store';
+import { getAllCurrencies } from '../../api/getAllCurrencies';
+import { ICurrencyItem } from '../../entities/ICurrencyItem';
+import { GET_ASSETS_INFO_REQUEST, GET_ASSETS_INFO_SUCCESS, SET_UPDATED_CURRENCY, UPDATE_CURRENCY_RATE } from './actions';
 
-function* handler(){
+export function* handler(){
     yield takeEvery(GET_ASSETS_INFO_REQUEST, getAllCurrenciesInfo);
-    yield takeEvery(UPDATE_CURRENCY_RATE, updateCurrencyRate)
+    yield takeEvery(UPDATE_CURRENCY_RATE, updateCurrencyRate);
 }
 
-function* getAllCurrenciesInfo(action: {payload: object, type: string}){
+function* getAllCurrenciesInfo(){
     const response = yield call(getAllCurrencies);
-    // console.log('respo', response)
-    yield put({type: GET_ASSETS_INFO_SUCCESS, payload: response?.data})
+    yield put({type: GET_ASSETS_INFO_SUCCESS, payload: response?.data});
 }
 
 function* updateCurrencyRate(action: {payload: object, type: string}){
-    const data = useSelector((state: any) => state.currencies);
-
+    const data = store.getState();
+    const newData = changeCurrency(data?.currencies?.data, action.payload);
+    yield put({type: SET_UPDATED_CURRENCY, payload: newData});
 }
 
-const changeCurrency(data: Array<object>)
-
-export {handler};
+const changeCurrency  = (data: Array<ICurrencyItem>, rates: object) => {
+    const newData = data.map(rate =>
+        !!rates[rate.id]
+          ? { ...rate, priceUsd: rates[rate.id] }
+          : rate
+      );
+    return newData;
+}

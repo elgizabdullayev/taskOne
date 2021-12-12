@@ -1,39 +1,37 @@
-import React, { FC, useEffect } from 'react';
-import { View, Text, ScrollView, Pressable } from "react-native";
-import { useDispatch, useSelector } from 'react-redux';
-import { getCurrencies } from '../../models/currencies/actions';
-import { WebSocketClient } from '../../webSocket/webSocket';
+import { useIsFocused } from '@react-navigation/core';
+import React, { FC } from 'react';
+import { Text, Pressable, FlatList } from "react-native";
+import { useSelector } from 'react-redux';
+import { INavigation } from '../../entities/INavigation';
+import { styles } from './styles';
 
 interface Props {
-    navigation: any
+    navigation: INavigation
 }
 
 export const AllCurrencies: FC<Props> = ({navigation}) => {
-    const dispatch = useDispatch();
-    const ws = new WebSocketClient();
-    useEffect(() => {
-        dispatch(getCurrencies());
-        ws.getInfo();
-    }, [])
+    const isFocused = useIsFocused();
+    console.log('isFocused', isFocused)
+    const getDataOnFocus = (isFocused: boolean, state: any) => {
+        if(isFocused){
+            return state.currencies.data;
+        }
+    }
+    const currenciesData = useSelector((state: any) => getDataOnFocus(isFocused, state));
 
-    const currenciesData = useSelector((state: any) => state.currencies);
-    console.log('aaa');
-
-    const renderItems = currenciesData?.data?.map((item: any, index: number) => { return (
-        <View key={index}>
-            <Pressable onPress={() => navigation.replace("DetailCurrency", item)}>
-                <Text style={{fontSize: 16}}>
-                    {item?.name} {ratesData?.data[item?.id] ? ratesData?.data[item?.id] : Math.round(item?.priceUsd * 100) / 100}
-                </Text>
-            </Pressable>
-        </View>)
-    })
+    const renderItem = ({ item }) => (
+        <Pressable key={item.id + item.priceUsd} onPress={() => navigation.navigate("DetailCurrency", item)}>
+            <Text style={styles.textStyle}>
+            {item?.name} {item.priceUsd}
+            </Text>
+        </Pressable>
+    );
     
     return (
-        <View style={{flex: 1}}>
-            <ScrollView>
-                {renderItems}
-            </ScrollView>
-        </View>
+        <FlatList
+            data={currenciesData}
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+        />
     )
 }
