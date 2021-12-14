@@ -12,7 +12,6 @@ export function* handler(){
 function* getAllCurrenciesInfo(){
     for(let i = 0; i < 4; i++){
         const response = yield call(getAllCurrencies);
-        console.log('aaa')
         if(response){
             yield put({type: GET_ASSETS_INFO_SUCCESS, payload: response?.data});
             break;
