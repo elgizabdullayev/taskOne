@@ -3,7 +3,7 @@ import { Button, Text, View } from "react-native";
 import { shallowEqual, useSelector } from 'react-redux';
 import { ICurrencyItem } from '../../entities/ICurrencyItem';
 import { INavigation } from '../../entities/INavigation';
-import { styles } from '../allCurrencies/styles';
+import { getStyles } from '../allCurrencies/styles';
 import { StaticInfoPart } from './staticInfoPart';
 
 interface Props {
@@ -12,6 +12,7 @@ interface Props {
 }
 
 export const DetailCurrency: FC<Props> = ({navigation, route}) => {
+    const styles = getStyles();
     const {changePercent24Hr, explorer, id, marketCapUsd, symbol, volumeUsd24Hr } = route.params;
     console.log('id', id)
     const rate = useSelector((state: any) => state.currencies.data?.find((rate: ICurrencyItem)=>{

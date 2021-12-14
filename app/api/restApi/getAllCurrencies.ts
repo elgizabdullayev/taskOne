@@ -9,7 +9,8 @@ export const getAllCurrencies = async() => {
         }
         });
         if(response.status == 200){
-            return await response.json(); 
+            let parsedResponse =  await response.json(); 
+            return parsedResponse;
         }
     } catch (error) {
         console.error('getAllCurrencies', error);

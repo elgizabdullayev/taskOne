@@ -1,6 +1,6 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
 import { store } from '../../../store';
-import { getAllCurrencies } from '../../api/getAllCurrencies';
+import { getAllCurrencies } from '../../api/restApi/getAllCurrencies';
 import { ICurrencyItem } from '../../entities/ICurrencyItem';
 import { GET_ASSETS_INFO_REQUEST, GET_ASSETS_INFO_SUCCESS, SET_UPDATED_CURRENCY, UPDATE_CURRENCY_RATE } from './actions';
 
@@ -10,8 +10,14 @@ export function* handler(){
 }
 
 function* getAllCurrenciesInfo(){
-    const response = yield call(getAllCurrencies);
-    yield put({type: GET_ASSETS_INFO_SUCCESS, payload: response?.data});
+    for(let i = 0; i < 4; i++){
+        const response = yield call(getAllCurrencies);
+        console.log('aaa')
+        if(response){
+            yield put({type: GET_ASSETS_INFO_SUCCESS, payload: response?.data});
+            break;
+        }
+    }
 }
 
 function* updateCurrencyRate(action: {payload: object, type: string}){
@@ -20,7 +26,7 @@ function* updateCurrencyRate(action: {payload: object, type: string}){
     yield put({type: SET_UPDATED_CURRENCY, payload: newData});
 }
 
-const changeCurrency  = (data: Array<ICurrencyItem>, rates: object) => {
+const changeCurrency  = (data: Array<ICurrencyItem>, rates: {id: string}) => {
     const newData = data.map(rate =>
         !!rates[rate.id]
           ? { ...rate, priceUsd: rates[rate.id] }
