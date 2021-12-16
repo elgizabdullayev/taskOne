@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 import { Button, Text, View } from "react-native";
 import { shallowEqual, useSelector } from 'react-redux';
 import { ICurrencyItem } from '../../entities/ICurrencyItem';
@@ -12,7 +12,7 @@ interface Props {
 }
 
 export const DetailCurrency: FC<Props> = ({navigation, route}) => {
-    const styles = getStyles();
+    const styles = useMemo(()=>getStyles(), []);
     const {changePercent24Hr, explorer, id, marketCapUsd, symbol, volumeUsd24Hr } = route.params;
     console.log('id', id)
     const rate = useSelector((state: any) => state.currencies.data?.find((rate: ICurrencyItem)=>{

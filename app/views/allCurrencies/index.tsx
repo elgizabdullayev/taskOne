@@ -1,5 +1,5 @@
 import { useIsFocused } from '@react-navigation/core';
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 import { Text, Pressable, FlatList } from "react-native";
 import { useSelector } from 'react-redux';
 import { ICurrencyItem } from '../../entities/ICurrencyItem';
@@ -11,7 +11,7 @@ interface Props {
 }
 
 export const AllCurrencies: FC<Props> = ({navigation}) => {
-    const styles = getStyles();
+    const styles = useMemo(()=>getStyles(), []);
     const isFocused = useIsFocused();
 
     console.log('isFocused', isFocused)
