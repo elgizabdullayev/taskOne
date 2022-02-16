@@ -1,3 +1,5 @@
+import { ICurrencyItem } from "../../entities/ICurrencyItem";
+
 const GET_ASSETS_INFO_SUCCESS = 'GET_ASSETS_INFO_SUCCESS';
 const GET_ASSETS_INFO_REQUEST = 'GET_ASSETS_INFO_REQUEST';
 const UPDATE_CURRENCY_RATE = 'UPDATE_CURRENCY_RATE';
@@ -11,5 +13,5 @@ export {
 }
 
 export const getCurrencies = () => ({type: GET_ASSETS_INFO_REQUEST});
-export const setUpdatedCurrency = (data: Array<object>) => ({type: SET_UPDATED_CURRENCY, payload: data})
-export const setCurrencies = (data: Array<object>) => ({type: GET_ASSETS_INFO_SUCCESS, payload: data });
+export const setUpdatedCurrency = (data: Array<ICurrencyItem>) => ({type: SET_UPDATED_CURRENCY, payload: data})
+export const setCurrencies = (data: Array<ICurrencyItem>) => ({type: GET_ASSETS_INFO_SUCCESS, payload: data });

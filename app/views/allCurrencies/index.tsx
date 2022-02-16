@@ -14,7 +14,6 @@ export const AllCurrencies: FC<Props> = ({navigation}) => {
     const styles = useMemo(()=>getStyles(), []);
     const isFocused = useIsFocused();
 
-    console.log('isFocused', isFocused)
     const getDataOnFocus = (isFocused: boolean, state: any) => {
         if(isFocused){
             return state.currencies.data;

@@ -12,6 +12,7 @@ export const getAllCurrencies = async() => {
             let parsedResponse =  await response.json(); 
             return parsedResponse;
         }
+        return;
     } catch (error) {
         console.error('getAllCurrencies', error);
     }   

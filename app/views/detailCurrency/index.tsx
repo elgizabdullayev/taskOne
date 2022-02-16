@@ -14,7 +14,7 @@ interface Props {
 export const DetailCurrency: FC<Props> = ({navigation, route}) => {
     const styles = useMemo(()=>getStyles(), []);
     const {changePercent24Hr, explorer, id, marketCapUsd, symbol, volumeUsd24Hr } = route.params;
-    console.log('id', id)
+
     const rate = useSelector((state: any) => state.currencies.data?.find((rate: ICurrencyItem)=>{
         return rate.id == id
     }), shallowEqual);

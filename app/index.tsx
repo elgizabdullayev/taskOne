@@ -18,7 +18,6 @@ export default function App() {
       ws.initSocket('wss://ws.coincap.io/prices?assets=ALL');
       return () => ws.close();
     }, [])
-    console.log('ooooooooooooo');
 
     return (
       <NavigationContainer>

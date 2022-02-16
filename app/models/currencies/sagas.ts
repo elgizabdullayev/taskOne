@@ -9,7 +9,7 @@ export function* handler(){
     yield takeEvery(UPDATE_CURRENCY_RATE, updateCurrencyRate);
 }
 
-function* getAllCurrenciesInfo(){
+function* getAllCurrenciesInfo(): Generator{
     for(let i = 0; i < 4; i++){
         const response = yield call(getAllCurrencies);
         if(response){
@@ -19,7 +19,7 @@ function* getAllCurrenciesInfo(){
     }
 }
 
-function* updateCurrencyRate(action: {payload: object, type: string}){
+function* updateCurrencyRate(action: {payload: {id: string}, type: string}): Generator{
     const data = store.getState();
     const newData = changeCurrency(data?.currencies?.data, action.payload);
     yield put({type: SET_UPDATED_CURRENCY, payload: newData});
